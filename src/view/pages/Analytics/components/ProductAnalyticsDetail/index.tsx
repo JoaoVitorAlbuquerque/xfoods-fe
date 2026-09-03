@@ -18,7 +18,7 @@ import { DataQualityBadge } from "../../../../components/DataQualityBadge";
 import { ListFeedback } from "../../../../components/ListFeedback";
 import { NotesPanel } from "../../../../components/NotesPanel";
 import { PriceStatusBadge } from "../../../../components/PriceStatusBadge";
-import { AnalyticsFilterBar } from "../AnalyticsFilterBar";
+import { ReportFilterBar } from "../../../../components/ReportFilterBar";
 import { useAnalyticsFilters } from "../../useAnalyticsFilters";
 
 export function ProductAnalyticsDetail() {
@@ -50,7 +50,11 @@ export function ProductAnalyticsDetail() {
         Voltar aos rankings
       </Link>
 
-      <AnalyticsFilterBar filters={filters} onChange={setFilters} />
+      <ReportFilterBar
+        filters={filters}
+        onChange={setFilters}
+        periodHint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
+      />
 
       {isNotFound && (
         <div className="mb-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-yellow-900">

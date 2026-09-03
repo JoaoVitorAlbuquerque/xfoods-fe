@@ -32,6 +32,13 @@ import { ProductAnalyticsDetail } from '../view/pages/Analytics/components/Produ
 import { AnalyticsAlerts } from '../view/pages/Analytics/components/AnalyticsAlerts';
 import { StockDashboard } from '../view/pages/Analytics/components/StockDashboard';
 import { CostDashboard } from '../view/pages/Analytics/components/CostDashboard';
+import { Consumption } from '../view/pages/Consumption';
+import { ConsumptionDashboard } from '../view/pages/Consumption/components/ConsumptionDashboard';
+import { ConsumptionBySupply } from '../view/pages/Consumption/components/ConsumptionBySupply';
+import { ConsumptionByProduct } from '../view/pages/Consumption/components/ConsumptionByProduct';
+import { TopDeviations } from '../view/pages/Consumption/components/TopDeviations';
+import { FinancialLosses } from '../view/pages/Consumption/components/FinancialLosses';
+import { WasteByPeriod } from '../view/pages/Consumption/components/WasteByPeriod';
 import { Expenses } from '../view/pages/Expenses';
 import { ExpensesList } from '../view/pages/Expenses/components/ExpensesList';
 import { ExpenseOccurrences } from '../view/pages/Expenses/components/ExpenseOccurrences';
@@ -124,6 +131,14 @@ export function Router() {
               <Route path="/analytics/alerts" element={<AnalyticsAlerts />} />
               <Route path="/analytics/stock" element={<StockDashboard />} />
               <Route path="/analytics/costs" element={<CostDashboard />} />
+            </Route>
+            <Route element={<Consumption />}>
+              <Route path="/consumption" element={<ConsumptionDashboard />} />
+              <Route path="/consumption/by-supply" element={<ConsumptionBySupply />} />
+              <Route path="/consumption/by-product" element={<ConsumptionByProduct />} />
+              <Route path="/consumption/deviations" element={<TopDeviations />} />
+              <Route path="/consumption/losses" element={<FinancialLosses />} />
+              <Route path="/consumption/waste" element={<WasteByPeriod />} />
             </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />

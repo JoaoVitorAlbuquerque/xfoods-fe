@@ -1,35 +1,54 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { AnalyticsFilters } from "../../../../../app/services/analyticsService";
-import { categoriesService } from "../../../../../app/services/categoriesService";
-import { productsService } from "../../../../../app/services/productsService";
-import { suppliesService } from "../../../../../app/services/suppliesService";
-import { supplyCategoriesService } from "../../../../../app/services/supplyCategoriesService";
+import { categoriesService } from "../../app/services/categoriesService";
+import { productsService } from "../../app/services/productsService";
+import { suppliesService } from "../../app/services/suppliesService";
+import { supplyCategoriesService } from "../../app/services/supplyCategoriesService";
 import {
   suppliesQueryKey,
   supplyCategoriesQueryKey,
-} from "../../../../../app/hooks/useStockQueries";
-import { PeriodFilter } from "../../../../components/PeriodFilter";
-import { Select } from "../../../../components/Select";
+} from "../../app/hooks/useStockQueries";
+import { PeriodFilter } from "./PeriodFilter";
+import { Select } from "./Select";
 
-export type AnalyticsFilterField =
+/** Os recortes que os relatórios gerenciais têm em comum. */
+export interface ReportFilterValues {
+  from?: string;
+  to?: string;
+  productId?: string;
+  categoryId?: string;
+  supplyId?: string;
+  supplyCategoryId?: string;
+}
+
+export type ReportFilterField =
   | 'product'
   | 'category'
   | 'supply'
   | 'supplyCategory';
 
-interface AnalyticsFilterBarProps {
-  filters: AnalyticsFilters;
-  onChange(next: AnalyticsFilters): void;
-  /** Cada painel mostra só os recortes que fazem diferença na conta dele. */
-  show?: AnalyticsFilterField[];
+interface ReportFilterBarProps<T extends ReportFilterValues> {
+  filters: T;
+  onChange(next: T): void;
+  /** Cada relatório mostra só os recortes que fazem diferença na conta dele. */
+  show?: ReportFilterField[];
+  periodHint?: string;
+  /** Controles próprios do relatório, como tipos de movimentação. */
+  children?: React.ReactNode;
 }
 
-export function AnalyticsFilterBar({
+/**
+ * Período e recortes de produto e insumo, compartilhados por Indicadores e
+ * Consumo. As chaves das consultas são as mesmas das telas de estoque e
+ * cardápio, então a lista costuma vir do cache.
+ */
+export function ReportFilterBar<T extends ReportFilterValues>({
   filters,
   onChange,
   show = [],
-}: AnalyticsFilterBarProps) {
+  periodHint,
+  children,
+}: ReportFilterBarProps<T>) {
   const wantsMenu = show.includes('product') || show.includes('category');
   const wantsSupply = show.includes('supply') || show.includes('supplyCategory');
 
@@ -47,8 +66,6 @@ export function AnalyticsFilterBar({
     enabled: show.includes('product'),
   });
 
-  // Mesmas chaves das telas de estoque, para a lista já vir do cache quando o
-  // usuário passou por lá — e só buscar no painel que usa o filtro.
   const { data: supplies = [] } = useQuery({
     queryKey: [...suppliesQueryKey, {}],
     queryFn: () => suppliesService.getAll({}),
@@ -63,7 +80,7 @@ export function AnalyticsFilterBar({
     enabled: show.includes('supplyCategory'),
   });
 
-  function handleChange(key: keyof AnalyticsFilters, value: string) {
+  function handleChange(key: keyof ReportFilterValues, value: string) {
     const next = { ...filters };
 
     if (value === '') {
@@ -82,7 +99,7 @@ export function AnalyticsFilterBar({
         to={filters.to ?? ''}
         onChangeFrom={value => handleChange('from', value)}
         onChangeTo={value => handleChange('to', value)}
-        hint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
+        hint={periodHint ?? 'Em branco, o período é o mês corrente.'}
       />
 
       {(wantsMenu || wantsSupply) && (
@@ -148,6 +165,8 @@ export function AnalyticsFilterBar({
           )}
         </div>
       )}
+
+      {children}
     </div>
   );
 }

@@ -16,7 +16,7 @@ import { stockMovementTypeLabels } from "../../../../../types/StockMovement";
 import { DataQualityBadge } from "../../../../components/DataQualityBadge";
 import { ListFeedback } from "../../../../components/ListFeedback";
 import { NotesPanel } from "../../../../components/NotesPanel";
-import { AnalyticsFilterBar } from "../AnalyticsFilterBar";
+import { ReportFilterBar } from "../../../../components/ReportFilterBar";
 import { useAnalyticsFilters } from "../../useAnalyticsFilters";
 
 export function CostDashboard() {
@@ -34,9 +34,10 @@ export function CostDashboard() {
 
   return (
     <>
-      <AnalyticsFilterBar
+      <ReportFilterBar
         filters={filters}
         onChange={setFilters}
+        periodHint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
         show={['category', 'product', 'supplyCategory', 'supply']}
       />
 
@@ -167,9 +168,12 @@ export function CostDashboard() {
                 <span>
                   <strong>Desvio não é desperdício.</strong> Saiu mais do que a
                   ficha previa pode ser perda, mas também erro de lançamento,
-                  inventário, produção, ajuste ou consumo não registrado. A
-                  quebra por insumo, com tolerância e classificação de causa,
-                  está no relatório de consumo. {deviation.note}
+                  inventário, produção, ajuste ou consumo não registrado.{' '}
+                  {deviation.note}{' '}
+                  <Link to="/consumption/by-supply" className="font-bold underline">
+                    Ver o Estimado × Real por insumo
+                  </Link>
+                  .
                 </span>
               </p>
 

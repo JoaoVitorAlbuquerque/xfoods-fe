@@ -10,7 +10,7 @@ import { formatCompetenceDate } from "../../../../../app/utils/formatCompetenceD
 import { ListFeedback } from "../../../../components/ListFeedback";
 import { NotesPanel } from "../../../../components/NotesPanel";
 import { PriceStatusBadge } from "../../../../components/PriceStatusBadge";
-import { AnalyticsFilterBar } from "../AnalyticsFilterBar";
+import { ReportFilterBar } from "../../../../components/ReportFilterBar";
 import { AlertSection } from "./AlertSection";
 import { useAnalyticsAlertsController } from "./useAnalyticsAlertsController";
 
@@ -52,9 +52,10 @@ export function AnalyticsAlerts() {
 
   return (
     <>
-      <AnalyticsFilterBar
+      <ReportFilterBar
         filters={filters}
         onChange={setFilters}
+        periodHint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
         show={['category', 'product', 'supplyCategory', 'supply']}
       />
 

@@ -16,7 +16,7 @@ import { DataQualityBadge } from "../../../../components/DataQualityBadge";
 import { ListFeedback } from "../../../../components/ListFeedback";
 import { NotesPanel } from "../../../../components/NotesPanel";
 import { TableComponents } from "../../../../components/TableElements";
-import { AnalyticsFilterBar } from "../AnalyticsFilterBar";
+import { ReportFilterBar } from "../../../../components/ReportFilterBar";
 import { useProductRankingController } from "./useProductRankingController";
 
 export function ProductRanking() {
@@ -70,9 +70,10 @@ export function ProductRanking() {
         </span>
       </p>
 
-      <AnalyticsFilterBar
+      <ReportFilterBar
         filters={filters}
         onChange={setFilters}
+        periodHint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
         show={['category', 'product']}
       />
 

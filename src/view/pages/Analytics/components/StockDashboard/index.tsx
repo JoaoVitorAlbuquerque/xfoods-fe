@@ -14,7 +14,7 @@ import { stockMovementTypeLabels } from "../../../../../types/StockMovement";
 import { SupplyMovementTotal } from "../../../../../types/Analytics";
 import { ListFeedback } from "../../../../components/ListFeedback";
 import { StockStatusBadge } from "../../../../components/StockStatusBadge";
-import { AnalyticsFilterBar } from "../AnalyticsFilterBar";
+import { ReportFilterBar } from "../../../../components/ReportFilterBar";
 import { useAnalyticsFilters } from "../../useAnalyticsFilters";
 
 interface SupplyTotalsListProps {
@@ -92,9 +92,10 @@ export function StockDashboard() {
 
   return (
     <>
-      <AnalyticsFilterBar
+      <ReportFilterBar
         filters={filters}
         onChange={setFilters}
+        periodHint="Em branco, o período é o mês corrente. O recorte vale para as vendas e para a despesa rateada."
         show={['supplyCategory', 'supply']}
       />
 
