@@ -25,6 +25,13 @@ import { Pricing } from '../view/pages/Pricing';
 import { PricingProducts } from '../view/pages/Pricing/components/PricingProducts';
 import { PricingProductDetail } from '../view/pages/Pricing/components/PricingProductDetail';
 import { PricingSimulator } from '../view/pages/Pricing/components/PricingSimulator';
+import { Analytics } from '../view/pages/Analytics';
+import { AnalyticsOverview } from '../view/pages/Analytics/components/AnalyticsOverview';
+import { ProductRanking } from '../view/pages/Analytics/components/ProductRanking';
+import { ProductAnalyticsDetail } from '../view/pages/Analytics/components/ProductAnalyticsDetail';
+import { AnalyticsAlerts } from '../view/pages/Analytics/components/AnalyticsAlerts';
+import { StockDashboard } from '../view/pages/Analytics/components/StockDashboard';
+import { CostDashboard } from '../view/pages/Analytics/components/CostDashboard';
 import { Expenses } from '../view/pages/Expenses';
 import { ExpensesList } from '../view/pages/Expenses/components/ExpensesList';
 import { ExpenseOccurrences } from '../view/pages/Expenses/components/ExpenseOccurrences';
@@ -106,6 +113,17 @@ export function Router() {
                 path="/pricing/products/:productId"
                 element={<PricingProductDetail />}
               />
+            </Route>
+            <Route element={<Analytics />}>
+              <Route path="/analytics" element={<AnalyticsOverview />} />
+              <Route path="/analytics/products" element={<ProductRanking />} />
+              <Route
+                path="/analytics/products/:productId"
+                element={<ProductAnalyticsDetail />}
+              />
+              <Route path="/analytics/alerts" element={<AnalyticsAlerts />} />
+              <Route path="/analytics/stock" element={<StockDashboard />} />
+              <Route path="/analytics/costs" element={<CostDashboard />} />
             </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />
