@@ -8,6 +8,7 @@ const tabs = [
   { to: '/settings/measurement-units', label: 'Unidades de medida' },
   { to: '/settings/stock', label: 'Estoque' },
   { to: '/settings/allocation', label: 'Rateio' },
+  { to: '/settings/pricing', label: 'Preços' },
 ];
 
 export function Settings() {

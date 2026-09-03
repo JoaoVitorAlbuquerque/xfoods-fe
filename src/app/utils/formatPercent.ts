@@ -14,3 +14,20 @@ export function formatPercent(value: number | null, fractionDigits = 2) {
 
   return `${value > 0 ? '+' : ''}${formatted}%`;
 }
+
+/**
+ * Sem o sinal de mais: uma margem de 30% não é uma variação de +30%, e o
+ * prefixo faria a leitura dizer outra coisa.
+ */
+export function formatPercentPlain(value: number | null, fractionDigits = 2) {
+  if (value === null) {
+    return '—';
+  }
+
+  const formatted = new Intl.NumberFormat('pt-br', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: fractionDigits,
+  }).format(value);
+
+  return `${formatted}%`;
+}

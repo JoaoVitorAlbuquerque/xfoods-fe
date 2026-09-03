@@ -5,6 +5,7 @@ import { MenuIcon } from "./icons/MenuIcon";
 import { StockIcon } from "./icons/StockIcon";
 import { PurchasesIcon } from "./icons/PurchasesIcon";
 import { ExpensesIcon } from "./icons/ExpensesIcon";
+import { PricingIcon } from "./icons/PricingIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
 import { ExitIcon } from "./icons/ExitIcon";
@@ -24,6 +25,7 @@ const navItems: NavItem[] = [
   { to: '/stock', label: 'Estoque', icon: StockIcon },
   { to: '/purchases', label: 'Compras', icon: PurchasesIcon },
   { to: '/expenses', label: 'Despesas', icon: ExpensesIcon },
+  { to: '/pricing', label: 'Preços', icon: PricingIcon },
   { to: '/users', label: 'Leads', icon: UserIcon },
   { to: '/settings/measurement-units', label: 'Ajustes', icon: SettingsIcon },
 ];

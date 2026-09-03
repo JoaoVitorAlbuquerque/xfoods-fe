@@ -20,6 +20,11 @@ import { Settings } from '../view/pages/Settings';
 import { SettingsUnits } from '../view/pages/Settings/components/SettingsUnits';
 import { SettingsStock } from '../view/pages/Settings/components/SettingsStock';
 import { SettingsAllocation } from '../view/pages/Settings/components/SettingsAllocation';
+import { SettingsPricing } from '../view/pages/Settings/components/SettingsPricing';
+import { Pricing } from '../view/pages/Pricing';
+import { PricingProducts } from '../view/pages/Pricing/components/PricingProducts';
+import { PricingProductDetail } from '../view/pages/Pricing/components/PricingProductDetail';
+import { PricingSimulator } from '../view/pages/Pricing/components/PricingSimulator';
 import { Expenses } from '../view/pages/Expenses';
 import { ExpensesList } from '../view/pages/Expenses/components/ExpensesList';
 import { ExpenseOccurrences } from '../view/pages/Expenses/components/ExpenseOccurrences';
@@ -94,10 +99,19 @@ export function Router() {
               <Route path="/expenses/allocation" element={<CostAllocationView />} />
               <Route path="/expenses/full-cost" element={<FullCostReport />} />
             </Route>
+            <Route element={<Pricing />}>
+              <Route path="/pricing" element={<PricingProducts />} />
+              <Route path="/pricing/simulate" element={<PricingSimulator />} />
+              <Route
+                path="/pricing/products/:productId"
+                element={<PricingProductDetail />}
+              />
+            </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />
               <Route path="/settings/stock" element={<SettingsStock />} />
               <Route path="/settings/allocation" element={<SettingsAllocation />} />
+              <Route path="/settings/pricing" element={<SettingsPricing />} />
             </Route>
           </Route>
         </Route>
