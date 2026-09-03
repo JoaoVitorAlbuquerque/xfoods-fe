@@ -7,6 +7,7 @@ import { useEditProductsModalController } from "./useEditProductsModalController
 import { InputCurrency } from "../../../../../../components/InputCurrency";
 import { RadixSelect } from "../../../../../../components/RadixSelect";
 import { useIngredientsController } from "../../useIngredientsController";
+import { ProductRecipeSummary } from "../ProductRecipeSummary";
 
 interface EditProductsModalProps {
   visible: boolean;
@@ -180,6 +181,10 @@ export function EditProductsModal({ visible, selectedProduct, onClose, onOpenNew
               {errors.ingredients && <p className="text-red-900">{errors.ingredients.message}</p>}
             </div>
           </main>
+
+          {selectedProduct?.id && (
+            <ProductRecipeSummary productId={selectedProduct.id} />
+          )}
 
           <footer className="flex items-center justify-between mt-8">
             <button

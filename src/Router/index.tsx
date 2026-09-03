@@ -9,6 +9,12 @@ import { Users } from '../view/pages/Users';
 import { PageLayout } from '../view/layouts/PageLayout';
 import { MenuProducts } from '../view/pages/Menu/components/MenuProducts';
 import { MenuCategories } from '../view/pages/Menu/components/MenuCategories';
+import { ProductRecipes, SubRecipes } from '../view/pages/Menu/components/Recipes/RecipesList';
+import { RecipeDetail } from '../view/pages/Menu/components/RecipeDetail';
+import { NewRecipe } from '../view/pages/Menu/components/RecipeForm/NewRecipe';
+import { EditRecipe } from '../view/pages/Menu/components/RecipeForm/EditRecipe';
+import { RecipeCostReport } from '../view/pages/Menu/components/RecipeCostReport';
+import { RecipeCoverage } from '../view/pages/Menu/components/RecipeCoverage';
 import { Financial } from '../view/pages/Financial';
 import { Settings } from '../view/pages/Settings';
 import { SettingsUnits } from '../view/pages/Settings/components/SettingsUnits';
@@ -44,6 +50,13 @@ export function Router() {
             <Route element={<Menu />}>
               <Route path="/menu/products" element={<MenuProducts />} />
               <Route path="/menu/categories" element={<MenuCategories />} />
+              <Route path="/menu/recipes" element={<ProductRecipes />} />
+              <Route path="/menu/sub-recipes" element={<SubRecipes />} />
+              <Route path="/menu/recipes-cost" element={<RecipeCostReport />} />
+              <Route path="/menu/recipes-coverage" element={<RecipeCoverage />} />
+              <Route path="/menu/recipes/new" element={<NewRecipe />} />
+              <Route path="/menu/recipes/:recipeId" element={<RecipeDetail />} />
+              <Route path="/menu/recipes/:recipeId/edit" element={<EditRecipe />} />
             </Route>
             <Route path="/users" element={<Users />} />
             <Route path="/financial" element={<Financial />} />
