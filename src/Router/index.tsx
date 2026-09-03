@@ -19,6 +19,13 @@ import { Financial } from '../view/pages/Financial';
 import { Settings } from '../view/pages/Settings';
 import { SettingsUnits } from '../view/pages/Settings/components/SettingsUnits';
 import { SettingsStock } from '../view/pages/Settings/components/SettingsStock';
+import { SettingsAllocation } from '../view/pages/Settings/components/SettingsAllocation';
+import { Expenses } from '../view/pages/Expenses';
+import { ExpensesList } from '../view/pages/Expenses/components/ExpensesList';
+import { ExpenseOccurrences } from '../view/pages/Expenses/components/ExpenseOccurrences';
+import { ExpenseCategories } from '../view/pages/Expenses/components/ExpenseCategories';
+import { CostAllocationView } from '../view/pages/Expenses/components/CostAllocationView';
+import { FullCostReport } from '../view/pages/Expenses/components/FullCostReport';
 import { Stock } from '../view/pages/Stock';
 import { StockPanel } from '../view/pages/Stock/components/StockPanel';
 import { StockSupplies } from '../view/pages/Stock/components/StockSupplies';
@@ -80,9 +87,17 @@ export function Router() {
               />
               <Route path="/purchases/:purchaseId" element={<PurchaseDetail />} />
             </Route>
+            <Route element={<Expenses />}>
+              <Route path="/expenses" element={<ExpensesList />} />
+              <Route path="/expenses/occurrences" element={<ExpenseOccurrences />} />
+              <Route path="/expenses/categories" element={<ExpenseCategories />} />
+              <Route path="/expenses/allocation" element={<CostAllocationView />} />
+              <Route path="/expenses/full-cost" element={<FullCostReport />} />
+            </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />
               <Route path="/settings/stock" element={<SettingsStock />} />
+              <Route path="/settings/allocation" element={<SettingsAllocation />} />
             </Route>
           </Route>
         </Route>

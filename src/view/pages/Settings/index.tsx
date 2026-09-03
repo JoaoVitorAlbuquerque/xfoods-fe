@@ -7,6 +7,7 @@ import { SectionTabs } from "../../components/SectionTabs";
 const tabs = [
   { to: '/settings/measurement-units', label: 'Unidades de medida' },
   { to: '/settings/stock', label: 'Estoque' },
+  { to: '/settings/allocation', label: 'Rateio' },
 ];
 
 export function Settings() {

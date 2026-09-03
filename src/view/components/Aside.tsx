@@ -4,6 +4,7 @@ import { HistoryIcon } from "./icons/HistoryIcon";
 import { MenuIcon } from "./icons/MenuIcon";
 import { StockIcon } from "./icons/StockIcon";
 import { PurchasesIcon } from "./icons/PurchasesIcon";
+import { ExpensesIcon } from "./icons/ExpensesIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
 import { ExitIcon } from "./icons/ExitIcon";
@@ -22,6 +23,7 @@ const navItems: NavItem[] = [
   { to: '/menu/products', label: 'Cardápio', icon: MenuIcon },
   { to: '/stock', label: 'Estoque', icon: StockIcon },
   { to: '/purchases', label: 'Compras', icon: PurchasesIcon },
+  { to: '/expenses', label: 'Despesas', icon: ExpensesIcon },
   { to: '/users', label: 'Leads', icon: UserIcon },
   { to: '/settings/measurement-units', label: 'Ajustes', icon: SettingsIcon },
 ];
@@ -41,7 +43,9 @@ export function Aside() {
           X<span className="font-light">F</span>
         </div>
 
-        <div className="flex flex-col w-full items-center justify-center">
+        {/* Rola sozinha: com muitas seções, empurrar o rodapé para fora da tela
+            esconderia o botão de sair em telas baixas. */}
+        <div className="flex min-h-0 flex-1 flex-col w-full items-center justify-center overflow-y-auto">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
