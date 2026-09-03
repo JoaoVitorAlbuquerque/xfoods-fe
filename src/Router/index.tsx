@@ -21,6 +21,13 @@ import { StockMovements } from '../view/pages/Stock/components/StockMovements';
 import { StockCounts } from '../view/pages/Stock/components/StockCounts';
 import { StockCountDetail } from '../view/pages/Stock/components/StockCountDetail';
 import { SupplyCategories } from '../view/pages/Stock/components/SupplyCategories';
+import { Purchases } from '../view/pages/Purchases';
+import { PurchasesList } from '../view/pages/Purchases/components/PurchasesList';
+import { NewPurchase } from '../view/pages/Purchases/components/NewPurchase';
+import { PurchaseDetail } from '../view/pages/Purchases/components/PurchaseDetail';
+import { Suppliers } from '../view/pages/Purchases/components/Suppliers';
+import { CostVariationReport } from '../view/pages/Purchases/components/CostVariationReport';
+import { SupplyCostHistory } from '../view/pages/Purchases/components/SupplyCostHistory';
 
 export function Router() {
   return (
@@ -48,6 +55,17 @@ export function Router() {
               <Route path="/stock/counts" element={<StockCounts />} />
               <Route path="/stock/counts/:stockCountId" element={<StockCountDetail />} />
               <Route path="/stock/categories" element={<SupplyCategories />} />
+            </Route>
+            <Route element={<Purchases />}>
+              <Route path="/purchases" element={<PurchasesList />} />
+              <Route path="/purchases/new" element={<NewPurchase />} />
+              <Route path="/purchases/suppliers" element={<Suppliers />} />
+              <Route path="/purchases/cost-report" element={<CostVariationReport />} />
+              <Route
+                path="/purchases/supplies/:supplyId/history"
+                element={<SupplyCostHistory />}
+              />
+              <Route path="/purchases/:purchaseId" element={<PurchaseDetail />} />
             </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />

@@ -91,6 +91,13 @@ export function SupplyDetail() {
                 <div>
                   <span className="block text-xs text-gray-400">Custo médio</span>
                   <strong className="text-gray-500">{formatCurrency(supply.averageCost)}</strong>
+
+                  <Link
+                    to={`/purchases/supplies/${supply.id}/history`}
+                    className="block text-xs font-bold text-red-600"
+                  >
+                    Histórico de custo
+                  </Link>
                 </div>
 
                 <div>

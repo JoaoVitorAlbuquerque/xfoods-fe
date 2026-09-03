@@ -3,6 +3,7 @@ import { HomeIcon } from "./icons/HomeIcon";
 import { HistoryIcon } from "./icons/HistoryIcon";
 import { MenuIcon } from "./icons/MenuIcon";
 import { StockIcon } from "./icons/StockIcon";
+import { PurchasesIcon } from "./icons/PurchasesIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
 import { ExitIcon } from "./icons/ExitIcon";
@@ -20,6 +21,7 @@ const navItems: NavItem[] = [
   { to: '/history', label: 'Histórico', icon: HistoryIcon },
   { to: '/menu/products', label: 'Cardápio', icon: MenuIcon },
   { to: '/stock', label: 'Estoque', icon: StockIcon },
+  { to: '/purchases', label: 'Compras', icon: PurchasesIcon },
   { to: '/users', label: 'Leads', icon: UserIcon },
   { to: '/settings/measurement-units', label: 'Ajustes', icon: SettingsIcon },
 ];
