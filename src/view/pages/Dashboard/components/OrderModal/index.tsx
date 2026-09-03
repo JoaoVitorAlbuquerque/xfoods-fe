@@ -101,8 +101,11 @@ export function OrderModal({
                         <div className="p-0.5 rounded-md bg-red-700">
                           <span className="font-semibold text-white">
                             {size === 'METER' && 'Metro'}
+                            {size === 'EXTRA_LARGE' && 'Gigante'}
                             {size === 'LARGE' && 'Grande'}
                             {size === 'MEAN' && 'Média'}
+                            {size === 'SMALL' && 'Pequena'}
+                            {size === 'TINY' && 'Broto'}
                           </span>
                         </div>
                       )}

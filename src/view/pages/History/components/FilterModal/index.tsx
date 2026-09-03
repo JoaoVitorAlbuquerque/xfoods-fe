@@ -51,7 +51,7 @@ export function FilterModal({
 
             <div className="mt-2 w-52 flex items-center justify-between">
               <button
-                onClick={() => onChangeMonth(-1)}
+                onClick={() => selectedMonth === 0 ? onChangeMonth(11) : onChangeMonth(-1)}
                 className="size-12 flex items-center justify-center"
               >
                 <ChevronLeftIcon className="size-6" />
@@ -64,7 +64,7 @@ export function FilterModal({
               </div>
 
               <button
-                onClick={() => onChangeMonth(1)}
+                onClick={() => selectedMonth === 11 ? onChangeMonth(-11) : onChangeMonth(1)}
                 className="size-12 flex items-center justify-center"
               >
                 <ChevronRightIcon className="size-6" />

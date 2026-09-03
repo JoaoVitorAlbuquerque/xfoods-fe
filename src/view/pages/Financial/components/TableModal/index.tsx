@@ -67,94 +67,97 @@ export function TableModal({ visible, onClose, selectedTable }: TableModalProps)
     <div
       className="left-0 top-0 bg-black/80 backdrop-blur-sm size-full fixed flex items-center justify-center z-10"
     >
-      {Object.entries(groupedOrders).map(([table, { products, total }]) => (
-        <Modal
-          visible={visible}
-          title={`Payment(Nome do cliente) - mesa ${table}`}
-          onClose={onClose}
-          key={table}
-        >
-          <form onSubmit={handleUpdatePaidOrders}>
-            <div className="max-h-[330px] overflow-auto">
-              {products.map(({ product, quantity, size }) => (
-                <div key={Math.random() * 1.4} className="border border-gray-500 p-1 rounded-md mb-2">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={`http://localhost:3000/uploads/${product.imagePath}`}
-                      alt={product.name}
-                      className="w-12 h-[28.51px] rounded-md"
-                    />
+      {Object.entries(groupedOrders).map(([table, { products, total }]) => {
+        // const totalDescount = orders.length >= 3 ? total * (-0.05) : total; // Fazer esta lógica para descontos
+        return (
+          <Modal
+            visible={visible}
+            title={`Payment(Nome do cliente) - mesa ${table}`}
+            onClose={onClose}
+            key={table}
+          >
+            <form onSubmit={handleUpdatePaidOrders}>
+              <div className="max-h-[330px] overflow-auto">
+                {products.map(({ product, quantity, size }) => (
+                  <div key={Math.random() * 1.4} className="border border-gray-500 p-1 rounded-md mb-2">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={`http://localhost:3000/uploads/${product.imagePath}`}
+                        alt={product.name}
+                        className="w-12 h-[28.51px] rounded-md"
+                      />
 
-                    <div>
-                      <div className="space-x-4 font-medium">
-                        <span className="text-gray-400">{product.name}</span>
-                        <span className="text-gray-500">{formatCurrency(product.price)}</span>
-                      </div>
+                      <div>
+                        <div className="space-x-4 font-medium">
+                          <span className="text-gray-400">{product.name}</span>
+                          <span className="text-gray-500">{formatCurrency(product.price)}</span>
+                        </div>
 
-                      <div className="space-x-4 font-medium">
-                        <span>QTD: {quantity}</span>
-                        <span>Tamanho: {size}</span>
+                        <div className="space-x-4 font-medium">
+                          <span>QTD: {quantity}</span>
+                          <span>Tamanho: {size}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-2 mt-5">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-500 font-normal text-sm">Clientes</span>
-
-                <Input
-                  name="leads"
-                  placeholder="Pesquise por um cliente..."
-                  value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
-                />
+                ))}
               </div>
-                <RadixSelect
-                  placeholder="Selecione um cliente a compra"
-                  onChange={onChangeLead}
-                  value={leadSelected}
-                  error={error?.message}
-                  options={filteredLeads.map((lead) => ({
-                    value: lead.id,
-                    label: lead.name + ' ' + lead.phone,
-                  }))}
-                /> {/* Fazer um dropdown menu que vai listar os leads paginados, e serão filtrados por um input */}
 
-                {/* <Combobox value={leadSelected} onChange={setLeadSelected}>
-                  <ComboboxInput
-                    aria-label="Assignee"
-                    className="border p-2 w-full"
-                    onChange={(event) => setSearchTerm(event.target.value)}
-                    placeholder="Pesquisar pelos clientes..."
+              <div className="space-y-2 mt-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500 font-normal text-sm">Clientes</span>
+
+                  <Input
+                    name="leads"
+                    placeholder="Pesquise por um cliente..."
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
                   />
-                  <ComboboxOptions className="border empty:invisible">
-                    {filteredLeads.map((lead) => (
-                      <ComboboxOption key={lead._id} value={lead} className="group flex gap-2 bg-white data-[focus]:bg-blue-100">
-                        <CheckIcon className="invisible size-5 group-data-[selected]:visible" />
-                        {`${lead.name}${lead.number}`}
-                      </ComboboxOption>
-                    ))}
-                  </ComboboxOptions>
-                </Combobox> */}
-            </div>
+                </div>
+                  <RadixSelect
+                    placeholder="Selecione um cliente a compra"
+                    onChange={onChangeLead}
+                    value={leadSelected}
+                    error={error?.message}
+                    options={filteredLeads.map((lead) => ({
+                      value: lead.id,
+                      label: lead.name + ' ' + lead.phone,
+                    }))}
+                  /> {/* Fazer um dropdown menu que vai listar os leads paginados, e serão filtrados por um input */}
 
-            <footer className="mt-10 flex items-center justify-between">
-              <span className="text-lg font-medium">Total: <strong>{formatCurrency(total)}</strong></span>
+                  {/* <Combobox value={leadSelected} onChange={setLeadSelected}>
+                    <ComboboxInput
+                      aria-label="Assignee"
+                      className="border p-2 w-full"
+                      onChange={(event) => setSearchTerm(event.target.value)}
+                      placeholder="Pesquisar pelos clientes..."
+                    />
+                    <ComboboxOptions className="border empty:invisible">
+                      {filteredLeads.map((lead) => (
+                        <ComboboxOption key={lead._id} value={lead} className="group flex gap-2 bg-white data-[focus]:bg-blue-100">
+                          <CheckIcon className="invisible size-5 group-data-[selected]:visible" />
+                          {`${lead.name}${lead.number}`}
+                        </ComboboxOption>
+                      ))}
+                    </ComboboxOptions>
+                  </Combobox> */}
+              </div>
 
-              <Button
-                isLoading={isPending}
-                disabled={isPending}
-                type="submit"
-              >
-                Pagar
-              </Button>
-            </footer>
-          </form>
-        </Modal>
-      ))}
+              <footer className="mt-10 flex items-center justify-between">
+                <span className="text-lg font-medium">Total: <strong>{formatCurrency(total)}</strong></span>
+
+                <Button
+                  isLoading={isPending}
+                  disabled={isPending}
+                  type="submit"
+                >
+                  Pagar
+                </Button>
+              </footer>
+            </form>
+          </Modal>
+        );
+      })}
     </div>
   );
 }
