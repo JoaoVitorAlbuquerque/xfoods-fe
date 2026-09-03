@@ -4,6 +4,7 @@ import { Button } from "../../../../components/Button";
 import { Input } from "../../../../components/Input";
 import { Modal } from "../../../../components/Modal";
 import { RadixSelect } from "../../../../components/RadixSelect";
+import { SaleStockResultModal } from "../../../../components/SaleStockResultModal";
 import { useTableModalController } from "./useTableModalController";
 
 // import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
@@ -28,6 +29,9 @@ export function TableModal({ visible, onClose, selectedTable }: TableModalProps)
     filteredLeads,
     searchTerm,
     setSearchTerm,
+    paidResult,
+    conflictMessage,
+    handleCloseSaleResult,
     // setLeadSelected,
   } = useTableModalController(selectedTable, onClose);
   // } = useTableModalController(selectedTable, orderIds, onClose);
@@ -67,6 +71,13 @@ export function TableModal({ visible, onClose, selectedTable }: TableModalProps)
     <div
       className="left-0 top-0 bg-black/80 backdrop-blur-sm size-full fixed flex items-center justify-center z-10"
     >
+      <SaleStockResultModal
+        visible={Boolean(paidResult) || Boolean(conflictMessage)}
+        result={paidResult}
+        conflictMessage={conflictMessage}
+        onClose={handleCloseSaleResult}
+      />
+
       {Object.entries(groupedOrders).map(([table, { products, total }]) => {
         // const totalDescount = orders.length >= 3 ? total * (-0.05) : total; // Fazer esta lógica para descontos
         return (

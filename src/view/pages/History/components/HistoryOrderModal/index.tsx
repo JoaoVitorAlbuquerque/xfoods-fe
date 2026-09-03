@@ -5,6 +5,7 @@ import { Modal } from "../../../../components/Modal";
 import { formatDate } from "../../../../../app/utils/formatDate";
 import { useHistoryOrderModalController } from "./useHistoryOrderModalController";
 import { Spinner } from "../../../../components/Spinner";
+import { OrderConsumptionPanel } from "../../../../components/OrderConsumptionPanel";
 
 interface HistoryOrderModalProps {
   visible: boolean;
@@ -120,6 +121,15 @@ export function HistoryOrderModal({ visible, order, onClose, selectedOrder }: Hi
             <span className="font-medium text-sm opacity-80">Total</span>
             <strong className="text-gray-500">{formatCurrency(total)}</strong>
           </div>
+
+          {order.status === 'CANCELED' && (
+            <p className="mt-4 rounded-lg bg-gray-100 p-3 text-xs text-gray-500">
+              Pedido cancelado: os insumos foram devolvidos ao estoque.
+              {order.paid && ' O pagamento continua marcado — o sistema não modela devolução de dinheiro, e por isso este pedido não entra no faturamento.'}
+            </p>
+          )}
+
+          {order.paid && <OrderConsumptionPanel orderId={order.id} />}
         </div>
 
         <footer className="flex items-center mt-8">

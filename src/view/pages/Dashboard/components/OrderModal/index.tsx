@@ -3,6 +3,7 @@ import { calculateTotalProducts } from '../../../../../app/utils/calculateTotalP
 import { formatCurrency } from '../../../../../app/utils/formatCurrency';
 import { Button } from '../../../../components/Button';
 import { Modal } from '../../../../components/Modal';
+import { OrderConsumptionPanel } from '../../../../components/OrderConsumptionPanel';
 
 interface OrderModalProps {
   visible: boolean;
@@ -134,6 +135,16 @@ export function OrderModal({
             <span className="font-medium text-sm opacity-80">Total</span>
             <strong className="text-gray-500">{formatCurrency(total)}</strong>
           </div>
+
+          {order.paid && <OrderConsumptionPanel orderId={order.id} />}
+
+          {order.paid && (
+            <p className="mt-4 rounded-lg bg-yellow-50 p-3 text-xs text-yellow-900">
+              Cancelar devolve os insumos ao estoque, mas <strong>não desfaz o
+              pagamento</strong>: o pedido continua marcado como pago. A
+              devolução do dinheiro se resolve no caixa.
+            </p>
+          )}
 
           <footer className="flex items-center justify-between mt-8">
             <button

@@ -3,6 +3,13 @@ import { Order } from "../../types/Order";
 export const calculateMonthlyTotal = (orders: Order[], selectedMonth: number, selectedYear: number): number => {
   // Filtrar os pedidos do mês e ano selecionados
   const filteredOrders = orders.filter(order => {
+    // Pedido cancelado fica no histórico e continua marcado como pago — o
+    // sistema não modela devolução de dinheiro. Somá-lo aqui inflaria o
+    // faturamento com venda que não existe mais.
+    if (order.status === 'CANCELED') {
+      return false;
+    }
+
     const orderDate = new Date(order.createdAt);
     return (
       orderDate.getMonth() + 1 === selectedMonth && // getMonth retorna 0-11, então adicionamos +1

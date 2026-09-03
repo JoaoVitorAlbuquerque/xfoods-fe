@@ -170,11 +170,13 @@ export function HistoryOrderTable() {
                         {order.status === 'WAITING' && <div className="size-2 rounded bg-red-700" />}
                         {order.status === 'IN_PRODUCTION' && <div className="size-2 rounded bg-orange-300" />}
                         {order.status === 'DONE' && <div className="size-2 rounded bg-green-600" />}
+                        {order.status === 'CANCELED' && <div className="size-2 rounded bg-gray-400" />}
                       </span>
                       <span>
                         {order.status === 'WAITING' && 'Fila de espera'}
                         {order.status === 'IN_PRODUCTION' && 'Em produção'}
                         {order.status === 'DONE' && 'Pronto'}
+                        {order.status === 'CANCELED' && 'Cancelado'}
                       </span>
                     </div>
                   </TableComponents.TableCell>
@@ -188,7 +190,20 @@ export function HistoryOrderTable() {
                       </span>
                     </div>
                   </TableComponents.TableCell>
-                  <TableComponents.TableCell>{formatCurrency(total)}</TableComponents.TableCell>
+                  <TableComponents.TableCell>
+                    <span className={order.status === 'CANCELED' ? 'text-gray-400 line-through' : undefined}>
+                      {formatCurrency(total)}
+                    </span>
+
+                    {order.status === 'CANCELED' && (
+                      <span
+                        className="block text-xs text-gray-400"
+                        title="Cancelado continua pago: o sistema não modela devolução de dinheiro. Fora do faturamento do mês."
+                      >
+                        fora do total
+                      </span>
+                    )}
+                  </TableComponents.TableCell>
                   <TableComponents.TableCell className="flex items-center gap-4">
                     <ActionButton onClick={() => handleOpenHistoryModal(order)}>
                       <img src={trashIcon} />

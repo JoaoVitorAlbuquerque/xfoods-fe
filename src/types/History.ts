@@ -23,10 +23,13 @@ export interface History {
   id: string;
   table: number;
   name?: string;
-  status: 'WAITING' | 'IN_PRODUCTION' | 'DONE';
+  status: 'WAITING' | 'IN_PRODUCTION' | 'DONE' | 'CANCELED';
   description?: string;
   createdAt: string,
   paid: boolean;
+  paidAt?: string | null;
+  /** Cancelado mantém `paid`: não existe devolução de dinheiro no sistema. */
+  canceledAt?: string | null;
   products: {
     id: string;
     quantity: number;

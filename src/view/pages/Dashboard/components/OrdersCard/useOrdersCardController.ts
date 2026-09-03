@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ordersService } from "../../../../../app/services/ordersService";
 import { UpdateOrdersParams } from "../../../../../app/services/ordersService/update";
+import { useInvalidateStock } from "../../../../../app/hooks/useStockQueries";
+import { toastApiError } from "../../../../../app/utils/toastApiError";
 
 export function useOrdersCardController(onOrderStatusChange: (orderId: string, status: string) => void) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,22 +22,35 @@ export function useOrdersCardController(onOrderStatusChange: (orderId: string, s
   }, []);
 
   const queryClient = useQueryClient();
+  const invalidateStock = useInvalidateStock();
+
+  // Cancelar deixou de ser exclusão: a rota própria marca o pedido como
+  // CANCELED e estorna o estoque com movimentações RETURN, preservando o
+  // histórico da venda.
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (orderId: string) => {
-      return ordersService.remove(orderId);
+      return ordersService.cancel(orderId);
     },
   });
 
   const handleCancelOrder = useCallback(async () => {
     try {
-      await mutateAsync(selectedOrder!.id);
+      const result = await mutateAsync(selectedOrder!.id);
+
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      toast.success(`Pedido da mesa ${selectedOrder?.table} foi cancelado com sucesso!`);
+      invalidateStock();
+
+      toast.success(
+        result.stockReversal.reversed
+          ? `Pedido da mesa ${selectedOrder?.table} cancelado. ${result.stockReversal.movements} movimentação(ões) devolvidas ao estoque.`
+          : `Pedido da mesa ${selectedOrder?.table} cancelado. Nada havia sido baixado do estoque.`,
+      );
+
       handleCloseOrderModal();
-    } catch {
-      toast.error('Erro ao cancelar o pedido!');
+    } catch (error) {
+      toastApiError(error, 'Erro ao cancelar o pedido!');
     }
-  }, [selectedOrder, mutateAsync, handleCloseOrderModal, queryClient]);
+  }, [selectedOrder, mutateAsync, handleCloseOrderModal, queryClient, invalidateStock]);
 
   //
 

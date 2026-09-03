@@ -1,5 +1,7 @@
+import { cancel } from "./cancel";
 import { create } from "./create";
 import { getAllDashboard } from "./getAllDashboard";
+import { getConsumption } from "./getConsumption";
 import { update } from "./update";
 import { remove } from "./remove";
 import { updateRestarted } from "./updateRestarted";
@@ -11,6 +13,8 @@ export const ordersService = {
   getAllDashboard,
   update,
   remove,
+  cancel,
+  getConsumption,
   updateRestarted,
   updatePaid,
   getOrdersByLead,
