@@ -37,9 +37,9 @@ export function Modal({
   }
 
   return (
-    <div className="bg-white min-w-[480px] rounded-lg p-8 transition-all z-10">
-      <header className="flex items-center justify-between mb-8">
-          <strong className="text-2xl font-bold text-gray-500">
+    <div className="bg-white w-full max-h-[90vh] overflow-y-auto rounded-lg p-6 sm:w-auto sm:min-w-[480px] sm:max-w-[90vw] sm:p-8 transition-all z-10">
+      <header className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
+          <strong className="text-xl sm:text-2xl font-bold text-gray-500">
             {title}
           </strong>
 

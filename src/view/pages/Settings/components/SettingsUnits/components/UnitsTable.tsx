@@ -27,8 +27,77 @@ export function UnitsTable({
   onReactivateUnit,
 }: UnitsTableProps) {
   return (
-    <div className="overflow-x-auto">
-      <TableComponents.Table>
+    <>
+      {/* Celular: um cartão por unidade — a tabela tem colunas demais para 375px. */}
+      <div className="space-y-3 md:hidden">
+        {units.map(unit => {
+          const baseCode = baseUnitCodeByKind[unit.kind];
+
+          return (
+            <div key={unit.id} className="rounded-lg border border-gray-600 bg-white p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <strong className="text-gray-500">{unit.code}</strong>
+
+                  <span className="block text-sm text-gray-400">{unit.name}</span>
+                </div>
+
+                <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-400">
+                  {unitKindLabels[unit.kind]}
+                </span>
+              </div>
+
+              <span className="mt-3 block text-sm text-gray-500">
+                {unit.isPackaging || unit.factorToBase === null
+                  ? '— embalagem, sem fator universal'
+                  : `1 ${unit.code} = ${formatQuantity(unit.factorToBase, 8)} ${baseCode}`}
+              </span>
+
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-xs text-gray-400">
+                  {unit.isSystem ? 'Unidade do sistema' : 'Personalizada'}
+                  {!unit.active && ' · inativa'}
+                </span>
+
+                {!unit.isSystem && (
+                  unit.active ? (
+                    <div className="flex items-center">
+                      <ActionButton
+                        title="Editar unidade"
+                        onClick={() => onOpenEditUnitModal(unit)}
+                      >
+                        <img src={editIcon} alt="Editar" />
+                      </ActionButton>
+
+                      <ActionButton
+                        title="Desativar unidade"
+                        onClick={() => onOpenDeleteUnitModal(unit)}
+                      >
+                        <img src={trashIcon} alt="Desativar" />
+                      </ActionButton>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={isReactivating}
+                      onClick={() => onReactivateUnit(unit)}
+                      className={cn(
+                        'text-sm font-bold text-red-600',
+                        isReactivating && 'cursor-not-allowed text-gray-400',
+                      )}
+                    >
+                      Reativar
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="hidden overflow-x-auto md:block">
+        <TableComponents.Table>
         <thead>
           <tr className="bg-gray-600/20">
             <TableComponents.TableHeader>Sigla</TableComponents.TableHeader>
@@ -134,6 +203,7 @@ export function UnitsTable({
           })}
         </tbody>
       </TableComponents.Table>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,8 +1,13 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { Header } from "../../components/Header";
 import { SettingsIcon } from "../../components/icons/SettingsIcon";
-import { cn } from "../../../app/utils/cn";
+import { SectionTabs } from "../../components/SectionTabs";
+
+const tabs = [
+  { to: '/settings/measurement-units', label: 'Unidades de medida' },
+  { to: '/settings/stock', label: 'Estoque' },
+];
 
 export function Settings() {
   return (
@@ -15,17 +20,7 @@ export function Settings() {
       </Header>
 
       <div className="flex-1">
-        <div className="py-4 border-b border-b-gray-600/40 mb-8">
-          <NavLink
-            to="/settings/measurement-units"
-            className={({ isActive }) => cn(
-              'px-10 py-4 text-sm font-normal text-gray-400 rounded-t-lg',
-              isActive && 'px-16 bg-white text-red-600 font-bold pointer-events-none',
-            )}
-          >
-            Unidades de medida
-          </NavLink>
-        </div>
+        <SectionTabs tabs={tabs} />
 
         <Outlet />
       </div>

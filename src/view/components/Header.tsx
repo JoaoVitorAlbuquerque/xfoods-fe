@@ -12,17 +12,17 @@ interface HeaderProps {
 
 export function Header({ icon, children, description, isDashboard, onOpenResetModal, isFinx }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between mt-10 mb-12">
-      <div className="flex flex-col gap-4">
+    <header className="flex flex-wrap items-center justify-between gap-4 mt-6 mb-8 md:mt-10 md:mb-12">
+      <div className="flex flex-col gap-2 md:gap-4">
         <div className="flex gap-2 items-center">
           <div>{icon}</div>
 
-          <span className="text-2xl font-semibold text-gray-500">
+          <span className="text-xl md:text-2xl font-semibold text-gray-500">
             {children}
           </span>
         </div>
 
-        <span className="font-medium text-gray-400">
+        <span className="text-sm md:text-base font-medium text-gray-400">
           {description}
         </span>
       </div>
