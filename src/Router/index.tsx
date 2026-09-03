@@ -10,6 +10,8 @@ import { PageLayout } from '../view/layouts/PageLayout';
 import { MenuProducts } from '../view/pages/Menu/components/MenuProducts';
 import { MenuCategories } from '../view/pages/Menu/components/MenuCategories';
 import { Financial } from '../view/pages/Financial';
+import { Settings } from '../view/pages/Settings';
+import { SettingsUnits } from '../view/pages/Settings/components/SettingsUnits';
 
 export function Router() {
   return (
@@ -29,6 +31,9 @@ export function Router() {
             </Route>
             <Route path="/users" element={<Users />} />
             <Route path="/financial" element={<Financial />} />
+            <Route element={<Settings />}>
+              <Route path="/settings/measurement-units" element={<SettingsUnits />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

@@ -4,6 +4,7 @@ import { HistoryIcon } from "./icons/HistoryIcon";
 import { MenuIcon } from "./icons/MenuIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { ExitIcon } from "./icons/ExitIcon";
+import { SettingsIcon } from "./icons/SettingsIcon";
 import { useAuth } from "../../app/hooks/useAuth";
 import { cn } from "../../app/utils/cn";
 
@@ -88,6 +89,22 @@ export function Aside() {
             <>
               <UserIcon className="w-6 h-6" isActive={getIconClasses(isActive)} />
               <span>Leads</span>
+            </>
+          )}
+        </NavLink>
+
+        <NavLink
+          className={({ isActive }) => isActive
+            ? 'flex flex-col items-center w-full gap-2 p-6 text-sm font-medium text-red-800'
+            : 'flex flex-col items-center w-full gap-2 p-6 text-sm font-medium text-gray-400'
+          }
+          to="/settings/measurement-units"
+        >
+          {({ isActive }) => (
+            <>
+              <SettingsIcon className="w-6 h-6" isActive={getIconClasses(isActive)} />
+
+              <span>Ajustes</span>
             </>
           )}
         </NavLink>
