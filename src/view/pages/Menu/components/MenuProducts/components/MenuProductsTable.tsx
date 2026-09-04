@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Product } from "../../../../../../types/Product";
+import { MenuProduct } from "../../../../../../types/MenuProduct";
 import { formatCurrency } from "../../../../../../app/utils/formatCurrency";
 import { ActionButton } from "../../../../../components/ActionButton";
 import { TableComponents } from "../../../../../components/TableElements";
@@ -10,16 +10,16 @@ import { EditProductsModal } from "./EditProductsModal";
 import { NewIngredientModal } from "./NewIngredientModal";
 
 interface MenuProductsTableProps {
-  products: Product[];
-  onOpenDeleteProductModal(product: Product): void;
+  products: MenuProduct[];
+  onOpenDeleteProductModal(product: MenuProduct): void;
 }
 
 export function MenuProductsTable({ products, onOpenDeleteProductModal }: MenuProductsTableProps) {
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<MenuProduct | null>(null);
   const [isNewIngredientModalVisible, setIsNewIngredientModalVisible] = useState(false);
 
-  function handleOpenEditProductModal(product: Product) {
+  function handleOpenEditProductModal(product: MenuProduct) {
     setIsProductModalVisible(true);
     setSelectedProduct(product);
   }

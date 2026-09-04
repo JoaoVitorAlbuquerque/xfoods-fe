@@ -1,5 +1,5 @@
 import { formatCurrency } from "../../../../../../../app/utils/formatCurrency";
-import { Product } from "../../../../../../../types/Product";
+import { MenuProduct } from "../../../../../../../types/MenuProduct";
 import { Button } from "../../../../../../components/Button";
 import { Modal } from "../../../../../../components/Modal";
 import { useDeleteProductModalController } from "./useDeleteProductModalController";
@@ -7,8 +7,8 @@ import { useDeleteProductModalController } from "./useDeleteProductModalControll
 interface DeleteProductModalProps {
   visible: boolean;
   onClose(): void;
-  product: Product | null;
-  selectedProduct: Product | null;
+  product: MenuProduct | null;
+  selectedProduct: MenuProduct | null;
 }
 
 export function DeleteProductModal({ visible, onClose, product, selectedProduct }: DeleteProductModalProps) {

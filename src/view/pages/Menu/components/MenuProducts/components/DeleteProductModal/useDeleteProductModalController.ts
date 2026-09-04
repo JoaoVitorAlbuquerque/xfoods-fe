@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { productsService } from "../../../../../../../app/services/productsService";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import { Product } from "../../../../../../../types/Product";
+import { MenuProduct } from "../../../../../../../types/MenuProduct";
 
-export function useDeleteProductModalController(selectedProduct: Product | null, onClose: () => void) {
+export function useDeleteProductModalController(selectedProduct: MenuProduct | null, onClose: () => void) {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (productId: string) => {

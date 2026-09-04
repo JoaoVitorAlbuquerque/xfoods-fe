@@ -5,7 +5,7 @@ import { z } from "zod";
 import { productsService } from "../../../../../../../app/services/productsService";
 import { UpdateProductsParams } from "../../../../../../../app/services/productsService/update";
 import toast from "react-hot-toast";
-import { Product } from "../../../../../../../types/Product";
+import { MenuProduct } from "../../../../../../../types/MenuProduct";
 import { categoriesService } from "../../../../../../../app/services/categoriesService";
 import { useEffect } from "react";
 
@@ -28,7 +28,32 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
   type FormData = z.infer<typeof schema>;
 
-export function useEditProductsModalController(onClose: () => void, selectedProduct: Product | null) {
+/**
+ * O produto da lista vem no formato da API (`MenuProduct`) e o formulário
+ * trabalha no formato de envio: preço em texto, categoria por id, ingredientes
+ * como lista de ids. A conversão precisa ser explícita — antes os dois eram
+ * tratados como o mesmo tipo e a categoria era jogada como objeto num campo de
+ * texto.
+ *
+ * `imagePath` é a exceção que não converte: o formulário exige um `File` e a
+ * API devolve o nome do arquivo. A imagem atual não pode ser reidratada, então
+ * o campo começa vazio e o usuário precisa escolher o arquivo de novo.
+ */
+function toFormValues(product: MenuProduct | null): Partial<FormData> {
+  if (!product) {
+    return { ingredients: [] };
+  }
+
+  return {
+    name: product.name,
+    description: product.description ?? '',
+    price: String(product.price ?? ''),
+    category: product.category?.id ?? '',
+    ingredients: product.ingredients?.map(({ ingredient }) => ingredient.id) ?? [],
+  };
+}
+
+export function useEditProductsModalController(onClose: () => void, selectedProduct: MenuProduct | null) {
   const {
     control,
     register,
@@ -37,28 +62,12 @@ export function useEditProductsModalController(onClose: () => void, selectedProd
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      name: selectedProduct?.name,
-      description: selectedProduct?.description,
-      imagePath: selectedProduct?.imagePath,
-      price: selectedProduct?.price,
-      category: selectedProduct?.category,
-      ingredients: selectedProduct?.ingredients || [],
-    },
+    defaultValues: toFormValues(selectedProduct),
   });
-
-  console.log({ selectedProduct });
 
   useEffect(() => {
     if (selectedProduct) {
-      reset({
-        name: selectedProduct.name || '',
-        description: selectedProduct.description || '',
-        imagePath: selectedProduct.imagePath || undefined,
-        price: selectedProduct.price || '',
-        category: selectedProduct.category || '',
-        ingredients: selectedProduct.ingredients || [],
-      });
+      reset(toFormValues(selectedProduct));
     }
   }, [selectedProduct, reset]);
 

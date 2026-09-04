@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Product } from "../../../../../types/Product";
+import { MenuProduct } from "../../../../../types/MenuProduct";
 import { useQuery } from "@tanstack/react-query";
 import { productsService } from "../../../../../app/services/productsService";
 
@@ -7,7 +7,7 @@ export function useMenuProductsController() {
   const [isMenuProductsModalVisible, setIsMenuProductsModalVisible] = useState(false);
   const [isNewIngredientModalVisible, setIsNewIngredientModalVisible] = useState(false);
   const [isDeleteProductModalVisible, setIsDeleteProductModalVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<MenuProduct | null>(null);
 
   function handleOpenNewProductsModal() {
     setIsMenuProductsModalVisible(true);
@@ -27,7 +27,7 @@ export function useMenuProductsController() {
     setIsMenuProductsModalVisible(true);
   }
 
-  function handleOpenDeleteProductModal(products: Product) {
+  function handleOpenDeleteProductModal(products: MenuProduct) {
     setIsDeleteProductModalVisible(true);
     setSelectedProduct(products);
   }

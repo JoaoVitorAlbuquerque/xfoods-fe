@@ -10,7 +10,9 @@ export function useHistoryOrderTableController() {
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
   const [isSticky, setIsSticky] = useState(false);
-  const stickyRef = useRef(null);
+  // Sem o tipo, `useRef(null)` infere `null` puro e `current.offsetTop` não
+  // compila — o ref é colado na `<tr>` do cabeçalho da tabela.
+  const stickyRef = useRef<HTMLTableRowElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {

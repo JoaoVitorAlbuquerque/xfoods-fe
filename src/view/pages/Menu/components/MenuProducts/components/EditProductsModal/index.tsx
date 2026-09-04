@@ -1,6 +1,6 @@
 import { Modal } from "../../../../../../components/Modal";
 import { Input } from "../../../../../../components/Input";
-import { Product } from "../../../../../../../types/Product";
+import { MenuProduct } from "../../../../../../../types/MenuProduct";
 import { Button } from "../../../../../../components/Button";
 import { Controller } from "react-hook-form";
 import { useEditProductsModalController } from "./useEditProductsModalController";
@@ -11,8 +11,8 @@ import { ProductRecipeSummary } from "../ProductRecipeSummary";
 
 interface EditProductsModalProps {
   visible: boolean;
-  product: Product | null;
-  selectedProduct: Product | null;
+  product: MenuProduct | null;
+  selectedProduct: MenuProduct | null;
   onClose(): void;
   onOpenNewIngredientModal(): void;
 }

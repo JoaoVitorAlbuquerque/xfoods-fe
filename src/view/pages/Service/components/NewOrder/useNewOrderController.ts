@@ -93,7 +93,7 @@ export function useNewOrderController() {
     queryFn: () => (
       selectedCategoryId
         ? productsService.getByCategory(selectedCategoryId)
-        : productsService.getMenu()
+        : productsService.getAll()
     ),
   });
 
