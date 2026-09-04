@@ -8,6 +8,7 @@ import { Button } from "../../../../components/Button";
 import { Input } from "../../../../components/Input";
 import { Select } from "../../../../components/Select";
 import { QuantityInput } from "../../../../components/QuantityInput";
+import { SupplySelect } from "../../../../components/SupplySelect";
 import { RecipeItemFields } from "./components/RecipeItemFields";
 import {
   RecipeFormMode,
@@ -41,6 +42,7 @@ export function RecipeForm({ mode, recipeType, presetProductId, recipe, backTo }
     append,
     remove,
     items,
+    outputSupplyId,
     defineSizeFactors,
     sizeFactors,
     yieldUnitId,
@@ -133,6 +135,98 @@ export function RecipeForm({ mode, recipeType, presetProductId, recipe, backTo }
                   : 'Padrão 1 porção. O custo por porção é o custo direto dividido por este número.'}
               </span>
             </div>
+
+            {/*
+              O campo que decide os dois modos de uma sub-receita. Sem ele, a
+              ficha é composição de custo e se desdobra na venda; com ele, o
+              subproduto ganha saldo próprio e passa a depender de produção.
+            */}
+            {isSubRecipe && (
+              <div className="space-y-2 md:col-span-2">
+                <span className="text-sm font-normal text-gray-500">
+                  Insumo de saída (opcional)
+                </span>
+
+                <Controller
+                  control={control}
+                  name="outputSupplyId"
+                  render={({ field: { value, onChange } }) => (
+                    <div className="space-y-2">
+                      <SupplySelect
+                        value={value}
+                        onChange={onChange}
+                        placeholder="Sem insumo de saída"
+                      />
+
+                      {value && (
+                        <button
+                          type="button"
+                          onClick={() => onChange('')}
+                          className="text-xs font-bold text-red-600"
+                        >
+                          Remover insumo de saída
+                        </button>
+                      )}
+                    </div>
+                  )}
+                />
+
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[420px] text-xs">
+                    <thead>
+                      <tr className="text-left text-gray-400">
+                        <th className="py-1 pr-3 font-normal"> </th>
+                        <th className="py-1 pr-3 font-normal">Sem insumo de saída</th>
+                        <th className="py-1 font-normal">Com insumo de saída</th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="text-gray-500">
+                      <tr className="border-t border-gray-600/40">
+                        <td className="py-1 pr-3 text-gray-400">O que é</td>
+                        <td className="py-1 pr-3">composição de custo</td>
+                        <td className="py-1 font-medium">subproduto estocado</td>
+                      </tr>
+
+                      <tr className="border-t border-gray-600/40">
+                        <td className="py-1 pr-3 text-gray-400">Na venda</td>
+                        <td className="py-1 pr-3">desdobra até tomate e cebola</td>
+                        <td className="py-1 font-medium">consome o molho</td>
+                      </tr>
+
+                      <tr className="border-t border-gray-600/40">
+                        <td className="py-1 pr-3 text-gray-400">Quem repõe</td>
+                        <td className="py-1 pr-3">a compra dos ingredientes</td>
+                        <td className="py-1 font-medium">a ordem de produção</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {outputSupplyId ? (
+                  <p className="flex items-start gap-2 rounded-lg bg-yellow-50 p-3 text-xs text-yellow-900">
+                    <InfoCircledIcon className="mt-0.5 shrink-0" />
+
+                    <span>
+                      Ao salvar, esta sub-receita passa a ter{' '}
+                      <strong>saldo próprio e precisará ser produzida</strong>: as
+                      fichas que a usam vão consumir esse saldo em vez de
+                      desdobrar até os ingredientes, e quem repõe o saldo é a{' '}
+                      <Link to="/production/new" className="font-bold underline">
+                        ordem de produção
+                      </Link>
+                      . A unidade base do insumo precisa ser da mesma grandeza do
+                      rendimento — massa com massa, volume com volume.
+                    </span>
+                  </p>
+                ) : (
+                  <span className="block text-xs text-gray-400">
+                    Em branco, esta sub-receita é só composição de custo: ela não
+                    tem saldo e se desdobra nos ingredientes a cada venda.
+                  </span>
+                )}
+              </div>
+            )}
 
             <div className="space-y-2 md:col-span-2">
               <span className="text-sm font-normal text-gray-500">Observações (opcional)</span>

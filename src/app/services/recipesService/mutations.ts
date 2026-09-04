@@ -25,6 +25,14 @@ export interface CreateRecipeParams {
   name?: string;
   yieldQuantity?: string;
   yieldUnit?: string;
+  /**
+   * Insumo onde o subproduto é estocado. Informar transforma a sub-receita em
+   * item PRODUZIDO: ela ganha saldo próprio, as fichas que a usam consomem esse
+   * saldo em vez de desdobrar até os ingredientes, e quem repõe é a ordem de
+   * produção. `null` desfaz isso e a sub-receita volta a ser só composição de
+   * custo; ausente mantém o que está gravado.
+   */
+  outputSupplyId?: string | null;
   notes?: string;
   activate?: boolean;
   items: RecipeItemParams[];

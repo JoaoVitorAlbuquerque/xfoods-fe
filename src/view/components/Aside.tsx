@@ -8,6 +8,7 @@ import { ExpensesIcon } from "./icons/ExpensesIcon";
 import { PricingIcon } from "./icons/PricingIcon";
 import { AnalyticsIcon } from "./icons/AnalyticsIcon";
 import { ConsumptionIcon } from "./icons/ConsumptionIcon";
+import { ProductionIcon } from "./icons/ProductionIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
 import { ExitIcon } from "./icons/ExitIcon";
@@ -26,6 +27,7 @@ const navItems: NavItem[] = [
   { to: '/menu/products', label: 'Cardápio', icon: MenuIcon },
   { to: '/stock', label: 'Estoque', icon: StockIcon },
   { to: '/purchases', label: 'Compras', icon: PurchasesIcon },
+  { to: '/production', label: 'Produção', icon: ProductionIcon },
   { to: '/expenses', label: 'Despesas', icon: ExpensesIcon },
   { to: '/pricing', label: 'Preços', icon: PricingIcon },
   { to: '/analytics', label: 'Indicadores', icon: AnalyticsIcon },

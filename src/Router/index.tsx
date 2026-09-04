@@ -39,6 +39,11 @@ import { ConsumptionByProduct } from '../view/pages/Consumption/components/Consu
 import { TopDeviations } from '../view/pages/Consumption/components/TopDeviations';
 import { FinancialLosses } from '../view/pages/Consumption/components/FinancialLosses';
 import { WasteByPeriod } from '../view/pages/Consumption/components/WasteByPeriod';
+import { Production } from '../view/pages/Production';
+import { ProductionOrdersList } from '../view/pages/Production/components/ProductionOrdersList';
+import { NewProductionOrder } from '../view/pages/Production/components/NewProductionOrder';
+import { ProductionOrderDetail } from '../view/pages/Production/components/ProductionOrderDetail';
+import { YieldReport } from '../view/pages/Production/components/YieldReport';
 import { Expenses } from '../view/pages/Expenses';
 import { ExpensesList } from '../view/pages/Expenses/components/ExpensesList';
 import { ExpenseOccurrences } from '../view/pages/Expenses/components/ExpenseOccurrences';
@@ -139,6 +144,15 @@ export function Router() {
               <Route path="/consumption/deviations" element={<TopDeviations />} />
               <Route path="/consumption/losses" element={<FinancialLosses />} />
               <Route path="/consumption/waste" element={<WasteByPeriod />} />
+            </Route>
+            <Route element={<Production />}>
+              <Route path="/production" element={<ProductionOrdersList />} />
+              <Route path="/production/new" element={<NewProductionOrder />} />
+              <Route path="/production/yield" element={<YieldReport />} />
+              <Route
+                path="/production/:productionOrderId"
+                element={<ProductionOrderDetail />}
+              />
             </Route>
             <Route element={<Settings />}>
               <Route path="/settings/measurement-units" element={<SettingsUnits />} />

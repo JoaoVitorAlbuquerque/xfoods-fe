@@ -58,6 +58,7 @@ const schema = z.object({
   name: z.string().max(120, 'Nome deve ter no máximo 120 caracteres').optional(),
   yieldQuantity: z.string().optional(),
   yieldUnitId: z.string().optional(),
+  outputSupplyId: z.string().optional(),
   notes: z.string().max(1000, 'Observação deve ter no máximo 1000 caracteres').optional(),
   activate: z.boolean(),
   defineSizeFactors: z.boolean(),
@@ -113,6 +114,7 @@ export function useRecipeFormController({
       name: '',
       yieldQuantity: '1',
       yieldUnitId: '',
+      outputSupplyId: '',
       notes: '',
       activate: false,
       defineSizeFactors: false,
@@ -122,6 +124,18 @@ export function useRecipeFormController({
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'items' });
+
+  /**
+   * `GET /recipes/:id` não devolve `outputSupplyId`, mas a listagem devolve —
+   * é de lá que o campo vem preenchido na edição.
+   *
+   * Derivado numa string de propósito: `subRecipes` é um array novo a cada
+   * render enquanto a consulta carrega, e usá-lo como dependência do efeito
+   * abaixo faria o `reset` disparar em loop.
+   */
+  const savedOutputSupplyId = recipe
+    ? subRecipes.find(item => item.id === recipe.id)?.outputSupplyId ?? ''
+    : '';
 
   // A ficha em edição chega por requisição; o formulário só pode ser
   // preenchido quando ela e as unidades estiverem em mãos — o item guarda a
@@ -136,6 +150,7 @@ export function useRecipeFormController({
       name: recipe.name ?? '',
       yieldQuantity: String(recipe.yieldQuantity),
       yieldUnitId: recipe.yieldUnit?.id ?? '',
+      outputSupplyId: savedOutputSupplyId,
       notes: recipe.notes ?? '',
       activate: false,
       // A leitura da ficha não devolve os fatores de tamanho salvos, então o
@@ -153,9 +168,10 @@ export function useRecipeFormController({
         notes: item.notes ?? '',
       })),
     });
-  }, [recipe, units, reset]);
+  }, [recipe, units, savedOutputSupplyId, reset]);
 
   const items = watch('items');
+  const outputSupplyId = watch('outputSupplyId');
   const defineSizeFactors = watch('defineSizeFactors');
   const sizeFactors = watch('sizeFactors');
   const yieldUnitId = watch('yieldUnitId');
@@ -196,11 +212,28 @@ export function useRecipeFormController({
       };
 
       if (mode === 'edit' && recipe) {
-        return recipesService.update({ id: recipe.id, ...shared, items: payloadItems });
+        return recipesService.update({
+          id: recipe.id,
+          ...shared,
+          // Só a edição consegue desfazer: `null` limpa o insumo de saída e a
+          // sub-receita volta a ser composição de custo. Na nova versão, a API
+          // herda o valor da versão anterior quando nada é informado.
+          ...(recipeType === 'SUB'
+            ? { outputSupplyId: data.outputSupplyId || null }
+            : {}),
+          items: payloadItems,
+        });
       }
 
       if (mode === 'new-version' && recipe) {
-        return recipesService.newVersion({ id: recipe.id, ...shared, items: payloadItems });
+        return recipesService.newVersion({
+          id: recipe.id,
+          ...shared,
+          ...(recipeType === 'SUB' && data.outputSupplyId
+            ? { outputSupplyId: data.outputSupplyId }
+            : {}),
+          items: payloadItems,
+        });
       }
 
       const productId = data.productId || presetProductId;
@@ -208,6 +241,9 @@ export function useRecipeFormController({
       return recipesService.create({
         ...(recipeType === 'PRODUCT' && productId ? { productId } : {}),
         ...shared,
+        ...(recipeType === 'SUB' && data.outputSupplyId
+          ? { outputSupplyId: data.outputSupplyId }
+          : {}),
         activate: data.activate,
         items: payloadItems,
       });
@@ -258,6 +294,7 @@ export function useRecipeFormController({
     append,
     remove,
     items,
+    outputSupplyId,
     defineSizeFactors,
     sizeFactors,
     yieldUnitId,
