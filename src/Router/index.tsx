@@ -16,6 +16,9 @@ import { EditRecipe } from '../view/pages/Menu/components/RecipeForm/EditRecipe'
 import { RecipeCostReport } from '../view/pages/Menu/components/RecipeCostReport';
 import { RecipeCoverage } from '../view/pages/Menu/components/RecipeCoverage';
 import { Financial } from '../view/pages/Financial';
+import { Service } from '../view/pages/Service';
+import { NewOrder } from '../view/pages/Service/components/NewOrder';
+import { ServiceOrders } from '../view/pages/Service/components/ServiceOrders';
 import { Settings } from '../view/pages/Settings';
 import { SettingsUnits } from '../view/pages/Settings/components/SettingsUnits';
 import { SettingsStock } from '../view/pages/Settings/components/SettingsStock';
@@ -78,6 +81,10 @@ export function Router() {
           <Route element={<PageLayout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/history" element={<History />} />
+            <Route element={<Service />}>
+              <Route path="/service" element={<NewOrder />} />
+              <Route path="/service/orders" element={<ServiceOrders />} />
+            </Route>
             <Route element={<Menu />}>
               <Route path="/menu/products" element={<MenuProducts />} />
               <Route path="/menu/categories" element={<MenuCategories />} />

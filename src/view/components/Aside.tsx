@@ -14,6 +14,7 @@ import { ConsumptionIcon } from "./icons/ConsumptionIcon";
 import { ProductionIcon } from "./icons/ProductionIcon";
 import { UserIcon } from "./icons/UserIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
+import { ServiceIcon } from "./icons/ServiceIcon";
 import { ExitIcon } from "./icons/ExitIcon";
 import { useAuth } from "../../app/hooks/useAuth";
 import { cn } from "../../app/utils/cn";
@@ -48,6 +49,7 @@ const navGroups: NavGroup[] = [
     label: 'Operação',
     icon: MenuIcon,
     items: [
+      { to: '/service', label: 'Atendimento', icon: ServiceIcon, match: '/service' },
       { to: '/history', label: 'Histórico', icon: HistoryIcon },
       { to: '/menu/products', label: 'Cardápio', icon: MenuIcon, match: '/menu' },
     ],

@@ -6,6 +6,11 @@ export interface Order {
   description?: string;
   createdAt: string,
   paid: boolean;
+  /**
+   * Marcado quando o pedido é entregue na mesa. `PATCH /orders/:id/read` só
+   * grava `true` — não existe rota para voltar atrás.
+   */
+  read?: boolean;
   paidAt?: string | null;
   /**
    * Cancelar estorna o estoque mas não mexe no pagamento: um pedido cancelado

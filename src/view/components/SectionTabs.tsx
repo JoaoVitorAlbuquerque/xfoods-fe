@@ -7,6 +7,8 @@ export interface SectionTab {
   label: string;
   /** Só marca ativo no caminho exato — para a aba raiz da seção. */
   end?: boolean;
+  /** Contador ao lado do rótulo. Some quando é zero ou indefinido. */
+  badge?: number;
 }
 
 interface SectionTabsProps {
@@ -27,11 +29,17 @@ export function SectionTabs({ tabs }: SectionTabsProps) {
             to={tab.to}
             end={tab.end}
             className={({ isActive }) => cn(
-              'shrink-0 rounded-t-lg px-4 py-3 text-sm font-normal text-gray-400 md:px-10 md:py-4',
+              'flex shrink-0 items-center gap-2 rounded-t-lg px-4 py-3 text-sm font-normal text-gray-400 md:px-10 md:py-4',
               isActive && 'bg-white font-bold text-red-600 md:px-16',
             )}
           >
             {tab.label}
+
+            {!!tab.badge && (
+              <span className="rounded-full bg-red-600 px-1.5 py-0.5 text-[11px] font-bold leading-none text-white">
+                {tab.badge}
+              </span>
+            )}
           </NavLink>
         ))}
       </div>
